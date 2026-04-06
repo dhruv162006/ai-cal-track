@@ -73,8 +73,8 @@ export default function SignInScreen() {
     >
       <ScrollView contentContainerStyle={{ flexGrow: 1, justifyContent: 'center', padding: 24 }}>
         <View className="mb-10">
-          <Text className="text-4xl font-bold text-text mb-2">Welcome back,</Text>
-          <Text className="text-textMuted text-lg">Sign in to continue your journey.</Text>
+          <Text className="text-4xl font-bold text-text-primary mb-2">Welcome back,</Text>
+          <Text className="text-text-secondary text-lg">Sign in to continue your journey.</Text>
         </View>
 
         <SocialButton 
@@ -112,7 +112,7 @@ export default function SignInScreen() {
         />
 
         <View className="flex-row justify-center mt-8">
-          <Text className="text-textMuted text-base">Don't have an account? </Text>
+          <Text className="text-text-secondary text-base">Don't have an account? </Text>
           <ExpoLink href="/(auth)/sign-up">
             <Text className="text-primary font-bold text-base">Sign Up</Text>
           </ExpoLink>

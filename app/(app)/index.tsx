@@ -9,7 +9,7 @@ export default function HomeScreen() {
 
   return (
     <View className="flex-1 items-center justify-center bg-background p-6">
-      <Text className="text-3xl font-bold text-text mb-4">Hello,</Text>
+      <Text className="text-3xl font-bold text-text-primary mb-4">Hello,</Text>
       <Text className="text-xl text-primary font-semibold mb-8">
         {user?.emailAddresses[0].emailAddress}
       </Text>

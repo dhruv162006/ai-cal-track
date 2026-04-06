@@ -11,7 +11,7 @@ export const Divider = ({ text }: DividerProps) => {
       <View className="flex-1 h-[1px] bg-border" />
       {text && (
         <View className="px-4">
-          <Text className="text-textMuted text-sm font-medium">{text}</Text>
+          <Text className="text-text-secondary text-sm font-medium">{text}</Text>
         </View>
       )}
       <View className="flex-1 h-[1px] bg-border" />

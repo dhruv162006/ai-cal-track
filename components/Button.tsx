@@ -1,6 +1,8 @@
 import React from 'react';
 import { TouchableOpacity, Text, ActivityIndicator, TouchableOpacityProps } from 'react-native';
 
+import { Colors } from '../constants/colors';
+
 interface ButtonProps extends TouchableOpacityProps {
   title: string;
   loading?: boolean;
@@ -18,7 +20,7 @@ export const Button = ({
   const getVariantStyles = () => {
     switch (variant) {
       case 'secondary':
-        return 'bg-card border border-border';
+        return 'bg-surface border border-border';
       case 'outline':
         return 'bg-transparent border-2 border-primary';
       case 'primary':
@@ -30,12 +32,12 @@ export const Button = ({
   const getVariantTextStyles = () => {
     switch (variant) {
       case 'secondary':
-        return 'text-text';
+        return 'text-text-primary';
       case 'outline':
         return 'text-primary';
       case 'primary':
       default:
-        return 'text-white';
+        return 'text-text-inverse';
     }
   };
 
@@ -48,7 +50,7 @@ export const Button = ({
       {...props}
     >
       {loading ? (
-        <ActivityIndicator color={variant === 'outline' ? '#FF4B4B' : '#FFFFFF'} className="mr-2" />
+        <ActivityIndicator color={variant === 'outline' ? Colors.primary : Colors.text.inverse} className="mr-2" />
       ) : null}
       <Text className={`${getVariantTextStyles()} font-bold text-base`}>
         {title}

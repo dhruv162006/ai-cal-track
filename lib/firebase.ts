@@ -1,5 +1,5 @@
 import { initializeApp, getApp, getApps } from 'firebase/app';
-import { getFirestore, doc, getDoc, setDoc, serverTimestamp } from 'firebase/firestore';
+import { getFirestore, doc, getDoc, setDoc, updateDoc, serverTimestamp } from 'firebase/firestore';
 
 const firebaseConfig = {
   apiKey: process.env.EXPO_PUBLIC_FIREBASE_API_KEY,
@@ -44,5 +44,36 @@ export const createUserIfNotExists = async (user: {
       console.error('Error creating user in Firestore', error);
       throw error;
     }
+  }
+};
+
+export const getUserProfile = async (userId: string) => {
+  if (!userId) return null;
+  try {
+    const userRef = doc(db, 'users', userId);
+    const userSnap = await getDoc(userRef);
+    if (userSnap.exists()) {
+      return userSnap.data();
+    }
+    return null;
+  } catch (error) {
+    console.error('Error fetching user profile', error);
+    return null;
+  }
+};
+
+export const updateUserProfile = async (userId: string, data: any) => {
+  if (!userId) {
+    console.error('[Firebase] Error: undefined userId passed to updateUserProfile');
+    return;
+  }
+  try {
+    const userRef = doc(db, 'users', userId);
+    console.log(`[Firebase] Attempting to save data for user: ${userId}`);
+    await setDoc(userRef, data, { merge: true });
+    console.log('[Firebase] Successfully wrote to Firestore');
+  } catch (error) {
+    console.error('[Firebase] Firestore write failed:', error);
+    throw error;
   }
 };

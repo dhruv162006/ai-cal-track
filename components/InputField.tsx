@@ -2,6 +2,8 @@ import React from 'react';
 import { View, Text, TextInput, TextInputProps, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
+import { Colors } from '../constants/colors';
+
 interface InputFieldProps extends TextInputProps {
   label?: string;
   icon?: keyof typeof Ionicons.glyphMap;
@@ -20,19 +22,19 @@ export const InputField = ({
 
   return (
     <View className="mb-4">
-      {label && <Text className="text-textMuted text-sm font-medium mb-1.5 ml-1">{label}</Text>}
-      <View className={`flex-row items-center bg-card border ${error ? 'border-primary' : 'border-border'} rounded-2xl px-4 py-3.5`}>
+      {label && <Text className="text-text-secondary text-sm font-medium mb-1.5 ml-1">{label}</Text>}
+      <View className={`flex-row items-center bg-surface border ${error ? 'border-error' : 'border-border'} rounded-2xl px-4 py-3.5`}>
         {icon && (
           <Ionicons
             name={icon}
             size={20}
-            color="#A0A0A0"
+            color={Colors.text.secondary}
             className="mr-3"
           />
         )}
         <TextInput
-          className="flex-1 text-text text-base"
-          placeholderTextColor="#666666"
+          className="flex-1 text-text-primary text-base"
+          placeholderTextColor={Colors.text.secondary}
           secureTextEntry={isPassword && !showPassword}
           {...props}
         />
@@ -41,7 +43,7 @@ export const InputField = ({
             <Ionicons
               name={showPassword ? 'eye-off-outline' : 'eye-outline'}
               size={20}
-              color="#A0A0A0"
+              color={Colors.text.secondary}
             />
           </TouchableOpacity>
         )}

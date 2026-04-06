@@ -75,8 +75,8 @@ export default function SignUpScreen() {
         {!pendingVerification && (
           <>
             <View className="mb-10">
-              <Text className="text-4xl font-bold text-text mb-2">Create Account</Text>
-              <Text className="text-textMuted text-lg">Start your fitness journey today.</Text>
+              <Text className="text-4xl font-bold text-text-primary mb-2">Create Account</Text>
+              <Text className="text-text-secondary text-lg">Start your fitness journey today.</Text>
             </View>
 
             <InputField
@@ -114,7 +114,7 @@ export default function SignUpScreen() {
             />
 
             <View className="flex-row justify-center mt-8">
-              <Text className="text-textMuted text-base">Already have an account? </Text>
+              <Text className="text-text-secondary text-base">Already have an account? </Text>
               <ExpoLink href="/(auth)/sign-in">
                 <Text className="text-primary font-bold text-base">Sign In</Text>
               </ExpoLink>
@@ -125,8 +125,8 @@ export default function SignUpScreen() {
         {pendingVerification && (
           <>
             <View className="mb-10">
-              <Text className="text-4xl font-bold text-text mb-2">Check your email</Text>
-              <Text className="text-textMuted text-lg">We sent a verification code to {emailAddress}</Text>
+              <Text className="text-4xl font-bold text-text-primary mb-2">Check your email</Text>
+              <Text className="text-text-secondary text-lg">We sent a verification code to {emailAddress}</Text>
             </View>
 
             <InputField

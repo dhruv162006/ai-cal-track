@@ -3,10 +3,12 @@ import { Slot, useRouter, useSegments } from 'expo-router';
 import { ClerkProvider, useAuth, useUser } from '@clerk/clerk-expo';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { tokenCache } from '../lib/clerk';
-import { createUserIfNotExists } from '../lib/firebase';
 import '../global.css';
 
 const CLERK_PUBLISHABLE_KEY = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY!;
+
+import { getUserProfile, createUserIfNotExists } from '../lib/firebase';
+import { getLocalData, setLocalData, StorageKeys } from '../lib/storage';
 
 function InitialLayout() {
   const { isLoaded, isSignedIn } = useAuth();
@@ -18,15 +20,37 @@ function InitialLayout() {
   useEffect(() => {
     if (!isLoaded) return;
 
-    const inAuthGroup = segments[0] === '(auth)';
-    const inAppGroup = segments[0] === '(app)';
+    const checkStateAndRoute = async () => {
+      const inAuthGroup = segments[0] === '(auth)';
+      const inAppGroup = segments[0] === '(app)';
+      const inOnboardingGroup = segments[0] === '(onboarding)';
+      const inAIGroup = segments[0] === '(ai)';
 
-    if (isSignedIn && !inAppGroup) {
-      router.replace('/(app)');
-    } else if (!isSignedIn && !inAuthGroup) {
-      router.replace('/(auth)/sign-in');
-    }
-  }, [isSignedIn, isLoaded, segments]);
+      if (!isSignedIn) {
+        if (!inAuthGroup) router.replace('/(auth)/sign-in');
+        return;
+      }
+
+      // If signed in, check onboarding status safely
+      let isOnboarded = await getLocalData(StorageKeys.USER_ONBOARDING);
+
+      if (!isOnboarded && user) {
+        const profile = await getUserProfile(user.id);
+        if (profile?.onboardingCompleted) {
+          isOnboarded = true;
+          await setLocalData(StorageKeys.USER_ONBOARDING, true);
+        }
+      }
+
+      if (isOnboarded) {
+        if (!inAppGroup) router.replace('/(app)');
+      } else {
+        if (!inOnboardingGroup && !inAIGroup) router.replace('/(onboarding)' as any);
+      }
+    };
+    
+    void checkStateAndRoute();
+  }, [isSignedIn, isLoaded, user, segments]);
 
   useEffect(() => {
     if (isSignedIn && user && !syncAttempted.current) {

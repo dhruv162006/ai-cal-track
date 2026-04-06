@@ -1,15 +1,9 @@
-import { Text, View } from "react-native";
+import { View, ActivityIndicator } from "react-native";
 
 export default function Index() {
   return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <Text>Vivek Lund kha le.</Text>
+    <View className="flex-1 justify-center items-center bg-background">
+      <ActivityIndicator size="large" color="#FF4B4B" />
     </View>
   );
 }
